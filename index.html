@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortress Contabilidade - Sua Contabilidade de Confiança</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fortress-blue': '#1565C0',
+                        'fortress-blue-light': '#42A5F5',
+                        'fortress-blue-dark': '#0D47A1',
+                        'fortress-gray-dark': '#343A40',
+                        'fortress-gray-light': '#F5F5F5',
+                        'fortress-amber': '#FFC107'
+                    },
+                    fontFamily: {
+                        'luxury': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'luxury': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                        'luxury-lg': '0 35px 60px -12px rgba(0, 0, 0, 0.3)',
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1565C0, #42A5F5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .luxury-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .floating-animation {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-white text-fortress-gray-dark font-luxury">
+    <div id="app">
+        <!-- Header/Navigation -->
+        <header class="glass-effect shadow-luxury fixed w-full top-0 z-50 border-b border-gray-100">
+            <nav class="container mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <img src="https://i.ibb.co/zV6s5Nj7/novo-logotipo-removebg-preview.png" alt="Fortress Contabilidade" class="h-14 w-auto filter drop-shadow-lg">
+                    </div>
+                    
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex space-x-10">
+                        <a href="#inicio" class="text-fortress-gray-dark hover:text-fortress-blue transition-all duration-300 font-medium relative group">
+                            Início
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-fortress-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#servicos" class="text-fortress-gray-dark hover:text-fortress-blue transition-all duration-300 font-medium relative group">
+                            Serviços
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-fortress-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#sobre" class="text-fortress-gray-dark hover:text-fortress-blue transition-all duration-300 font-medium relative group">
+                            Sobre
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-fortress-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#depoimentos" class="text-fortress-gray-dark hover:text-fortress-blue transition-all duration-300 font-medium relative group">
+                            Depoimentos
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-fortress-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#contato" class="text-fortress-gray-dark hover:text-fortress-blue transition-all duration-300 font-medium relative group">
+                            Contato
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-fortress-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="https://vinicius-reis.notion.site/PARA-O-CLIENTE-013496a061164cffb5a3af8586f2f142?pvs=4" target="_blank" class="text-fortress-gray-dark hover:text-fortress-blue transition-all duration-300 font-medium relative group">
+                            Dúvidas Frequentes
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-fortress-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="https://app.meucontador.mobi/meu-contador" target="_blank" class="text-fortress-gray-dark hover:text-fortress-blue transition-all duration-300 font-medium relative group">
+                            Área do Cliente
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-fortress-blue transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                    </div>
+                    
+                    <!-- CTA Button Desktop -->
+                    <div class="hidden md:block">
+                        <a href="https://wa.me/5531984701815" target="_blank" class="bg-gradient-to-r from-fortress-amber to-yellow-500 text-white px-8 py-3 rounded-xl hover:shadow-luxury transition-all duration-300 font-semibold transform hover:scale-105">
+                            <i class="fab fa-whatsapp mr-2"></i>Fale Conosco
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-fortress-blue">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu -->
+                <div v-show="mobileMenuOpen" class="md:hidden mt-4 pb-4">
+                    <div class="flex flex-col space-y-4">
+                        <a href="#inicio" @click="mobileMenuOpen = false" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Início</a>
+                        <a href="#servicos" @click="mobileMenuOpen = false" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Serviços</a>
+                        <a href="#sobre" @click="mobileMenuOpen = false" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Sobre</a>
+                        <a href="#depoimentos" @click="mobileMenuOpen = false" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Depoimentos</a>
+                        <a href="#contato" @click="mobileMenuOpen = false" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Contato</a>
+                        <a href="https://vinicius-reis.notion.site/PARA-O-CLIENTE-013496a061164cffb5a3af8586f2f142?pvs=4" target="_blank" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Dúvidas Frequentes</a>
+                        <a href="https://app.meucontador.mobi/meu-contador" target="_blank" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Área do Cliente</a>
+                        <a href="https://wa.me/5531984701815" target="_blank" class="bg-fortress-amber text-white px-6 py-2 rounded-lg hover:bg-yellow-500 transition-colors font-semibold text-center">
+                            <i class="fab fa-whatsapp mr-2"></i>Fale Conosco
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="inicio" class="relative pt-24 pb-32 bg-gradient-to-br from-fortress-blue via-fortress-blue-light to-fortress-blue-dark text-white overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+                <div class="absolute top-0 right-0 w-96 h-96 bg-fortress-amber rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
+                <div class="absolute bottom-0 left-1/2 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000"></div>
+            </div>
+            
+            <div class="container mx-auto px-6 py-20 relative z-10">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="mb-8">
+                        <span class="inline-block px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/90 border border-white/20">
+                            ✨ Mais de 15 anos de excelência
+                        </span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight">
+                        Sua Contabilidade de 
+                        <span class="gradient-text bg-gradient-to-r from-fortress-amber to-yellow-300 bg-clip-text text-transparent">
+                            Confiança
+                        </span>
+                    </h1>
+                    
+                    <p class="text-xl md:text-2xl mb-12 text-blue-100 max-w-3xl mx-auto font-light leading-relaxed">
+                        Transformamos a gestão contábil da sua empresa com soluções inovadoras, 
+                        tecnologia de ponta e atendimento personalizado para o seu negócio prosperar
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                        <a href="https://wa.me/5531984701815" target="_blank" class="group bg-gradient-to-r from-fortress-amber to-yellow-500 text-white px-10 py-5 rounded-2xl hover:shadow-luxury-lg transition-all duration-300 font-bold text-lg transform hover:scale-105 hover:-translate-y-1">
+                            <i class="fab fa-whatsapp mr-3 text-xl"></i>
+                            Fale Conosco Agora
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#servicos" class="group border-2 border-white/30 backdrop-blur-sm text-white px-10 py-5 rounded-2xl hover:bg-white hover:text-fortress-blue transition-all duration-300 font-semibold text-lg transform hover:scale-105">
+                            Conheça Nossos Serviços
+                            <i class="fas fa-chevron-down ml-2 group-hover:translate-y-1 transition-transform"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 pt-12 border-t border-white/20">
+                        <div class="text-center">
+                            <div class="text-3xl md:text-4xl font-bold text-fortress-amber mb-2">15+</div>
+                            <div class="text-blue-200 text-sm">Anos de Experiência</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-4xl font-bold text-fortress-amber mb-2">400+</div>
+                            <div class="text-blue-200 text-sm">Clientes Atendidos</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-4xl font-bold text-fortress-amber mb-2">98%</div>
+                            <div class="text-blue-200 text-sm">Satisfação</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Serviços Section -->
+        <section id="servicos" class="py-24 bg-gradient-to-b from-fortress-gray-light to-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <div class="mb-6">
+                        <span class="inline-block px-6 py-2 bg-fortress-blue/10 text-fortress-blue rounded-full text-sm font-semibold">
+                            NOSSOS SERVIÇOS
+                        </span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-fortress-blue-dark mb-6">
+                        Soluções <span class="gradient-text">Completas</span>
+                    </h2>
+                    <p class="text-xl text-fortress-gray-dark max-w-3xl mx-auto leading-relaxed">
+                        Oferecemos serviços especializados em contabilidade com tecnologia avançada e atendimento personalizado para empresas de todos os portes
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-4 gap-8">
+                    <!-- Contabilidade Tributária -->
+                    <div class="group luxury-card rounded-2xl p-8 hover:shadow-luxury-lg transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
+                        <div class="relative mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-fortress-blue to-fortress-blue-light rounded-2xl flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-fortress-amber rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-fortress-blue-dark mb-4 group-hover:text-fortress-blue transition-colors">
+                            Assessoria Tributária e Fiscal
+                        </h3>
+                        <p class="text-fortress-gray-dark mb-6 leading-relaxed">
+                            Gestão completa de obrigações fiscais, apuração de impostos e planejamento tributário estratégico para otimizar sua carga fiscal.
+                        </p>
+                        <ul class="text-fortress-gray-dark space-y-3">
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Apuração de impostos
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Planejamento tributário
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Obrigações acessórias
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Folha de Pagamento -->
+                    <div class="group luxury-card rounded-2xl p-8 hover:shadow-luxury-lg transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
+                        <div class="relative mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-fortress-blue to-fortress-blue-light rounded-2xl flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-fortress-amber rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-fortress-blue-dark mb-4 group-hover:text-fortress-blue transition-colors">
+                            Departamento Pessoal
+                        </h3>
+                        <p class="text-fortress-gray-dark mb-6 leading-relaxed">
+                            Processamento completo da folha de pagamento, cálculos trabalhistas e cumprimento de todas as obrigações legais.
+                        </p>
+                        <ul class="text-fortress-gray-dark space-y-3">
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Cálculo de salários
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Encargos sociais
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                eSocial e FGTS
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- BPO Financeiro -->
+                    <div class="group luxury-card rounded-2xl p-8 hover:shadow-luxury-lg transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
+                        <div class="relative mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-fortress-blue to-fortress-blue-light rounded-2xl flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-fortress-amber rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-fortress-blue-dark mb-4 group-hover:text-fortress-blue transition-colors">
+                            Departamento  Contábil
+                        </h3>
+                        <p class="text-fortress-gray-dark mb-6 leading-relaxed">
+                            Registro completo e organizado de todas as operações financeiras da sua empresa, conforme as normas contábeis vigentes, para garantir transparência, controle e tomada de decisão.
+                        </p>
+                        <ul class="text-fortress-gray-dark space-y-3">
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Demonstrativos contábeis
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Apuração de resultados
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Relatórios gerenciais
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Abertura e Legalização de Empresas -->
+                    <div class="group luxury-card rounded-2xl p-8 hover:shadow-luxury-lg transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
+                        <div class="relative mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-fortress-blue to-fortress-blue-light rounded-2xl flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-fortress-amber rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-fortress-blue-dark mb-4 group-hover:text-fortress-blue transition-colors">
+                            Abertura e Legalização de Empresas
+                        </h3>
+                        <p class="text-fortress-gray-dark mb-6 leading-relaxed">
+                            Processo completo de abertura e legalização de empresas, desde a escolha do tipo societário até a obtenção de todas as licenças necessárias.
+                        </p>
+                        <ul class="text-fortress-gray-dark space-y-3">
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Registro na Junta Comercial
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Inscrições fiscais
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-5 h-5 bg-fortress-blue/10 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-fortress-blue text-xs"></i>
+                                </div>
+                                Licenças e alvarás
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sobre Nós Section -->
+        <section id="sobre" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 class="text-3xl md:text-4xl font-bold text-fortress-blue-dark mb-6">Sobre a Fortress Contabilidade</h2>
+                            <p class="text-lg text-fortress-gray-dark mb-6">
+                                Com mais de <strong>15 anos de experiência</strong> no mercado contábil, a Fortress Contabilidade se consolidou como uma referência em prestação de serviços contábeis, fiscais e trabalhistas.
+                            </p>
+                            <p class="text-lg text-fortress-gray-dark mb-6">
+                                Nossa missão é oferecer soluções personalizadas e eficientes, sempre com foco na excelência do atendimento e na satisfação dos nossos clientes. Trabalhamos com empresas de diversos segmentos, desde pequenos negócios até grandes corporações.
+                            </p>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-fortress-blue">15+</div>
+                                    <div class="text-fortress-gray-dark">Anos de Experiência</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-fortress-blue">400+</div>
+                                    <div class="text-fortress-gray-dark">Clientes Atendidos</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-fortress-gray-light rounded-lg p-8">
+                                <img src="https://i.ibb.co/zV6s5Nj7/novo-logotipo-removebg-preview.png" alt="Fortress Contabilidade" class="h-40 w-auto mx-auto mb-4">
+                                <h3 class="text-2xl font-bold text-fortress-blue-dark mb-4">Confiança e Segurança</h3>
+                                <p class="text-fortress-gray-dark">
+                                    Sua empresa em mãos seguras, com profissionais qualificados e tecnologia de ponta para garantir a melhor gestão contábil.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Depoimentos Section -->
+        <section id="depoimentos" class="py-20 bg-fortress-gray-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-fortress-blue-dark mb-4">O que nossos clientes dizem</h2>
+                    <p class="text-xl text-fortress-gray-dark">Depoimentos reais de quem confia na Fortress Contabilidade</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Depoimento 1 -->
+                    <div class="bg-white rounded-lg shadow-lg p-8">
+                        <div class="text-fortress-amber text-2xl mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-fortress-gray-dark mb-6 italic">
+                            "Profissionais atenciosos e capacitados! Cuidam da contabilidade do espaço inspire pilates com carinho!"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-fortress-blue rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                CP
+                            </div>
+                            <div>
+                                <div class="font-semibold text-fortress-blue-dark">Camila Pereira</div>
+                                <div class="text-fortress-gray-dark text-sm">Empresária</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Depoimento 2 -->
+                    <div class="bg-white rounded-lg shadow-lg p-8">
+                        <div class="text-fortress-amber text-2xl mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-fortress-gray-dark mb-6 italic">
+                            "Excelente experiência. Profissionais competentes, atenciosos e super gabaritados. E com altíssima agilidade no atendimento."
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-fortress-blue rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                AL
+                            </div>
+                            <div>
+                                <div class="font-semibold text-fortress-blue-dark">Alexandre Brito</div>
+                                <div class="text-fortress-gray-dark text-sm">Administrador</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Depoimento 3 -->
+                    <div class="bg-white rounded-lg shadow-lg p-8">
+                        <div class="text-fortress-amber text-2xl mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-fortress-gray-dark mb-6 italic">
+                            "Toda equipe muito competente. Respondem super rápido todas as solicitações e são proativos com possíveis problemas."
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-fortress-blue rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                PH
+                            </div>
+                            <div>
+                                <div class="font-semibold text-fortress-blue-dark">Pedro H Oliveira</div>
+                                <div class="text-fortress-gray-dark text-sm">Sócio-Proprietário</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rodapé -->
+        <footer id="contato" class="bg-fortress-blue-dark text-white py-16">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-5 gap-8">
+                    <!-- Logo e Descrição -->
+                    <div class="md:col-span-2">
+                        <img src="https://i.ibb.co/zV6s5Nj7/novo-logotipo-removebg-preview.png" alt="Fortress Contabilidade" class="h-16 w-auto mb-4 filter brightness-0 invert">
+                        <p class="text-blue-200 mb-6">
+                            Sua contabilidade de confiança há mais de 15 anos. Oferecemos soluções completas para o crescimento do seu negócio.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://www.instagram.com/fortress.contabilidade" target="_blank" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/fortress-contabilidade-901690175" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://wa.me/5531984701815" target="_blank" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Endereço -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">ENDEREÇO</h3>
+                        <div class="space-y-3 text-blue-200">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt mr-3 mt-1"></i>
+                                <div>
+                                    <div>Av. Waldomiro Lobo, 681</div>
+                                    <div>Sobreloja - Guarani</div>
+                                    <div>Belo Horizonte/MG</div>
+                                    <div>CEP: 31814-620</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone mr-3"></i>
+                                <span>(31) 3504-3720</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope mr-3"></i>
+                                <span>contato@fortresscontabilidade.com.br</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Atendimento -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">ATENDIMENTO</h3>
+                        <div class="text-blue-200">
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-3"></i>
+                                <span>De segunda à sexta, das 9:00 às 18:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CTA -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Fale Conosco</h3>
+                        <p class="text-blue-200 mb-4">
+                            Pronto para transformar a gestão da sua empresa?
+                        </p>
+                        <a href="https://wa.me/5531984701815" target="_blank" class="bg-fortress-amber text-white px-6 py-3 rounded-lg hover:bg-yellow-500 transition-colors font-semibold inline-block">
+                            <i class="fab fa-whatsapp mr-2"></i>Conversar Agora
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="border-t border-blue-800 mt-12 pt-8 text-center text-blue-200">
+                    <p>&copy; 2025 Fortress Contabilidade CRC-MG 11992 - CNPJ: 20.276.891/0001-10. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- WhatsApp Float Button -->
+        <div class="fixed bottom-6 right-6 z-50">
+            <a href="https://wa.me/5531984701815" target="_blank" class="bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors animate-pulse">
+                <i class="fab fa-whatsapp text-2xl"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    mobileMenuOpen: false
+                }
+            },
+            mounted() {
+                // Smooth scrolling for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
