@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico — Simples Híbrido | Fortress Contabilidade</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --background:#0B0F1A;
+    --surface:#151B28;
+    --surface-deep:#0F1420;
+    --surface-lowest:#0b0e13;
+    --surface-modal:#1E2635;
+    --border:#222B3A;
+    --border-subtle:#1E2635;
+    --primary:#3F80CB;
+    --primary-hover:#5B93D2;
+    --text-primary:#E6EAF2;
+    --text-muted:#93A0B4;
+    --text-disabled:#5A6678;
+    --success:#22C55E;
+    --warning:#F59E0B;
+    --danger:#EF4444;
+    --r-md:8px;
+    --r-lg:12px;
+    --r-xl:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',sans-serif;
+    background-color:var(--background);
+    color:var(--text-primary);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+    padding:clamp(16px,4vw,40px) clamp(16px,4vw,24px) 60px;
+  }
+  .glow{
+    position:fixed;top:-10%;left:50%;transform:translateX(-50%);
+    width:900px;height:700px;max-width:120vw;
+    background:radial-gradient(circle, rgba(63,128,203,.13) 0%, rgba(63,128,203,0) 68%);
+    pointer-events:none;z-index:0;
+  }
+  .ic{width:20px;height:20px;display:inline-block;flex-shrink:0;vertical-align:middle}
+  .wrap{max-width:880px;margin:0 auto;position:relative;z-index:1}
+
+  ::selection{background-color:rgba(63,128,203,.3)}
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:var(--background)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+
+  .masthead{display:flex;align-items:center;gap:14px;margin-bottom:30px}
+  .logo-badge{
+    width:46px;height:46px;border-radius:var(--r-md);flex-shrink:0;
+    background:linear-gradient(135deg,#3F80CB,#5B93D2);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:22px;color:#fff;
+    box-shadow:0 4px 14px rgba(63,128,203,.35);
+  }
+  .masthead .brand-name{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+  .masthead .brand-sub{font-size:11px;font-weight:600;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--text-muted);margin-top:2px}
+
+  .hero{margin-bottom:28px}
+  .hero h1{font-size:clamp(22px,4vw,30px);font-weight:600;letter-spacing:-.02em;line-height:1.18}
+  .hero p{font-size:14px;color:var(--text-muted);margin-top:8px;max-width:54ch}
+
+  .card{
+    background-color:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--r-lg);
+    padding:clamp(18px,3vw,24px);
+    margin-bottom:20px;
+  }
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--text-muted);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+  .eyebrow .ic{color:var(--primary)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px 18px;align-items:start}
+  .field{display:flex;flex-direction:column;height:100%}
+  .subhead{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--text-disabled);margin:0 0 12px;display:flex;align-items:center;gap:10px}
+  .subhead::after{content:'';flex:1;height:1px;background:var(--border)}
+  .subhead + .grid{margin-bottom:22px}
+  .field label{display:flex;align-items:flex-end;font-size:12px;font-weight:600;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;
+    min-height:32px;line-height:1.35}
+  .input-wrap{position:relative}
+  .input-wrap .ic.lead{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none}
+  .input-wrap .suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;font-weight:500;pointer-events:none}
+  .input-wrap:has(.suffix) input{padding-right:34px}
+  .input-wrap .prefix{position:absolute;left:40px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;font-weight:500;pointer-events:none}
+  .input-wrap:has(.prefix) input{padding-left:66px}
+  .field input,.field select{
+    width:100%;font-family:inherit;font-size:14px;color:var(--text-primary);
+    background-color:var(--surface-lowest);
+    border:1px solid var(--border);border-radius:var(--r-md);
+    padding:12px 14px 12px 40px;transition:border-color .15s,box-shadow .15s;
+    appearance:none;-webkit-appearance:none;
+  }
+  .field select{cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2393A0B4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+  .field input::placeholder{color:var(--text-disabled)}
+  .field input:focus,.field select:focus{
+    outline:none;border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(63,128,203,.18);
+  }
+  .field .hint{font-size:11px;color:var(--text-disabled);margin-top:7px;line-height:1.45}
+  .iva-block{margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
+  .seg{display:inline-flex;background:var(--surface-lowest);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:3px;gap:3px;margin-top:8px}
+  .seg-b{font-family:inherit;font-size:13px;font-weight:500;color:var(--text-muted);
+    background:transparent;border:0;border-radius:6px;padding:8px 16px;cursor:pointer;
+    transition:background .15s,color .15s}
+  .seg-b:hover{color:var(--text-primary)}
+  .seg-b.active{background:var(--primary);color:#fff;font-weight:600}
+  .iva-block label{display:flex;justify-content:space-between;align-items:baseline}
+  .iva-block .val{font-size:14px;font-weight:600;color:var(--primary);
+    font-variant-numeric:tabular-nums;letter-spacing:0}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;
+    background:var(--border);border-radius:99px;margin-top:10px;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;
+    border-radius:50%;background:var(--primary);border:3px solid var(--surface);
+    box-shadow:0 1px 5px rgba(0,0,0,.5);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;
+    background:var(--primary);border:3px solid var(--surface);cursor:pointer}
+
+  .verdict{
+    border-radius:var(--r-lg);padding:clamp(22px,4vw,30px);margin-bottom:20px;
+    position:relative;overflow:hidden;border:1px solid var(--border);
+    background-color:var(--surface);transition:border-color .3s;
+  }
+  .verdict::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;transition:background .3s}
+  .verdict.go::after{background:radial-gradient(120% 100% at 0% 0%, rgba(34,197,94,.10), transparent 60%)}
+  .verdict.warn::after{background:radial-gradient(120% 100% at 0% 0%, rgba(245,158,11,.10), transparent 60%)}
+  .verdict.stop::after{background:radial-gradient(120% 100% at 0% 0%, rgba(239,68,68,.10), transparent 60%)}
+  .verdict>*{position:relative;z-index:1}
+  .verdict .pill{display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    padding:6px 12px;border-radius:999px;margin-bottom:14px}
+  .verdict.go .pill{background:rgba(34,197,94,.12);color:var(--success)}
+  .verdict.warn .pill{background:rgba(245,158,11,.12);color:var(--warning)}
+  .verdict.stop .pill{background:rgba(239,68,68,.12);color:var(--danger)}
+  .verdict .pill .ic{width:16px;height:16px}
+  .verdict h2{font-size:clamp(19px,3.2vw,25px);font-weight:600;letter-spacing:-.02em;line-height:1.22}
+  .verdict .lead{font-size:14px;color:var(--text-muted);margin-top:10px;max-width:60ch}
+  .verdict .big{font-size:clamp(30px,6vw,44px);font-weight:700;letter-spacing:-.03em;
+    font-variant-numeric:tabular-nums;margin-top:16px;line-height:1}
+  .verdict.go .big{color:var(--success)}
+  .verdict.warn .big{color:var(--warning)}
+  .verdict.stop .big{color:var(--danger)}
+  .verdict .big small{font-size:14px;font-weight:500;color:var(--text-muted);letter-spacing:0;margin-left:8px}
+
+  .reveal{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+    padding:14px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:500;
+    color:var(--text-muted);transition:all .15s;margin-bottom:20px}
+  .reveal:hover{border-color:var(--primary);color:var(--text-primary);background:var(--surface-modal)}
+  .reveal .chev{transition:transform .25s}
+  .reveal.open .chev{transform:rotate(180deg)}
+  .details{display:none}
+  .details.open{display:block;animation:fade .4s ease-out}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:20px}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:16px 18px;position:relative}
+  .stat .k{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)}
+  .stat .v{font-size:22px;font-weight:600;margin-top:8px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stat .ic{position:absolute;right:16px;top:16px;color:var(--primary);opacity:.75}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+  .col{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+  .col .ch{font-size:13px;font-weight:600;padding:13px 18px;letter-spacing:-.01em;
+    display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+  .col .ch .ic{width:18px;height:18px}
+  .col.conv .ch{background:var(--surface-deep);color:var(--text-primary)}
+  .col.conv .ch .ms{color:var(--text-muted)}
+  .col.hib .ch{background:rgba(63,128,203,.14);color:var(--primary)}
+  .col.hib .ch .ms{color:var(--primary)}
+  .rw{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 18px;font-size:13.5px}
+  .rw span:first-child{color:var(--text-muted)}
+  .rw .n{font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap;text-align:right}
+  .rw.muted .n{color:var(--text-disabled)}
+  .rw.tot{border-top:1px solid var(--border);margin-top:4px;padding-top:11px;font-weight:600}
+  .rw.tot span:first-child{color:var(--text-primary)}
+  .rw .micro{font-size:11px;font-weight:400;color:var(--text-disabled);margin-left:6px}
+
+  .liq-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .scn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px}
+  .scn .nm{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .scn .nm .ic{width:18px;height:18px;color:var(--primary)}
+  .scn .ds{font-size:12px;color:var(--text-disabled);margin:6px 0 14px}
+  .scn .ln{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;padding:5px 0}
+  .scn .ln span:first-child{color:var(--text-muted)}
+  .scn .ln .n{font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap}
+  .chip{margin-top:14px;padding:12px 14px;border-radius:var(--r-md)}
+  .chip .k{font-size:11px;font-weight:600;letter-spacing:.03em}
+  .chip .v{font-size:23px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.05;margin-top:3px}
+  .chip .sub{font-size:11.5px;margin-top:5px;opacity:.85}
+  .chip .ger{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    font-size:11.5px;opacity:.7;padding-bottom:7px;margin-bottom:8px;
+    border-bottom:1px solid rgba(255,255,255,.10)}
+  .chip .ger .n{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .chip.good{background:rgba(34,197,94,.12)}.chip.good .k{color:var(--success)}.chip.good .v{color:var(--success)}
+  .chip.bad{background:rgba(245,158,11,.12)}.chip.bad .k{color:var(--warning)}.chip.bad .v{color:var(--warning)}
+  .chip.neutral{background:var(--surface-deep)}.chip.neutral .k{color:var(--text-muted)}.chip.neutral .v{color:var(--text-primary)}
+
+  .foot-note{font-size:12.5px;color:var(--text-muted);line-height:1.6;margin-top:14px}
+  .foot-note b{color:var(--text-primary);font-weight:600}
+  .notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+  .note-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px}
+  .note-h{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:8px;color:var(--text-primary)}
+  .note-h .ic{width:17px;height:17px;color:var(--primary)}
+  .note-item p{font-size:12.5px;color:var(--text-muted);line-height:1.6;margin:0}
+  .note-item p b{color:var(--text-primary);font-weight:600}
+  .disclaimer{font-size:11.5px;color:var(--text-disabled);line-height:1.65;  border-top:1px solid var(--border);padding-top:18px;margin-top:20px}
+  .disclaimer b{color:var(--text-muted)}
+
+
+  .cta{background:linear-gradient(160deg, rgba(63,128,203,.12), rgba(63,128,203,.03));
+    border:1px solid rgba(63,128,203,.30);border-radius:var(--r-lg);
+    padding:clamp(20px,3.5vw,28px);margin-top:26px}
+  .cta-head{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600;
+    letter-spacing:-.01em;margin-bottom:10px}
+  .cta-head .ic{width:20px;height:20px;color:var(--primary)}
+  .cta-lead{font-size:13.5px;color:var(--text-muted);line-height:1.6;max-width:70ch;margin-bottom:20px}
+  .cta-lead b{color:var(--text-primary);font-weight:600}
+  .cta-actions{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:14px;
+    font-weight:600;text-decoration:none;border-radius:var(--r-md);padding:13px 20px;
+    transition:background .15s,border-color .15s,transform .1s;cursor:pointer}
+  .btn:active{transform:scale(.985)}
+  .btn .ic{width:18px;height:18px}
+  .btn-primary{background:var(--primary);color:#fff;border:1px solid var(--primary);
+    box-shadow:0 4px 14px rgba(63,128,203,.25)}
+  .btn-primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+  .btn-ghost{background:transparent;color:var(--text-primary);border:1px solid var(--border)}
+  .btn-ghost:hover{background:var(--surface);border-color:var(--primary)}
+  .cta-alt{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:20px;
+    padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted)}
+  .cta-alt a{display:inline-flex;align-items:center;gap:6px;color:var(--primary);
+    font-weight:600;text-decoration:none}
+  .cta-alt a:hover{color:var(--primary-hover);text-decoration:underline}
+  .cta-alt .ic{width:15px;height:15px}
+  @media(max-width:560px){.cta-actions{flex-direction:column}.btn{justify-content:center}}
+  .pagefoot{text-align:center;margin-top:28px}
+  .pagefoot p{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text-disabled);opacity:.6}
+
+  @media(max-width:640px){.compare{grid-template-columns:1fr}.liq-pair{grid-template-columns:1fr}.notes-grid{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="logo-badge">F</div>
+    <div>
+      <div class="brand-name">Diagnóstico Tributário</div>
+      <div class="brand-sub">Fortress Contabilidade</div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1>O Simples Híbrido vale a pena para a sua empresa?</h1>
+    <p>Informe os dados do seu negócio e veja, na hora, se migrar para o regime híbrido de IBS/CBS compensa. Veja também  o que muda no seu resultado.</p>
+  </div>
+
+  <section class="card">
+    <div class="eyebrow"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="tune"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>Dados da empresa</div>
+    <div class="subhead">Porte e receita</div>
+    <div class="grid">
+      <div class="field">
+        <label for="anexo">Anexo do Simples</label>
+        <div class="input-wrap">
+          <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="category"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          <select id="anexo">
+            <option value="I">I — Comércio</option>
+            <option value="II">II — Indústria</option>
+            <option value="III" selected>III — Serviços (Fator R ≥ 28%)</option>
+            <option value="IV">IV — Construção, limpeza, vigilância</option>
+            <option value="V">V — Serviços intelectuais</option>
+          </select>
+        </div>
+        <div class="hint">Na dúvida, consulte seu contador.</div>
+      </div>
+      <div class="field">
+        <label for="rbt12">Receita dos últimos 12 meses</label>
+        <div class="input-wrap">
+          <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="calendar_month"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <input type="text" id="rbt12" value="120.000" inputmode="numeric">
+          <span class="prefix">R$</span>
+        </div>
+        <div class="hint">RBT12 — soma do faturamento do ano.</div>
+      </div>
+      <div class="field">
+        <label for="recmes">Faturamento do mês</label>
+        <div class="input-wrap">
+          <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="payments"><rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.5"/><line x1="6" y1="10" x2="6" y2="15"/><line x1="18" y1="10" x2="18" y2="15"/></svg>
+          <input type="text" id="recmes" value="10.000" inputmode="numeric">
+          <span class="prefix">R$</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="compras">Compras do mês com IBS/CBS</label>
+        <div class="input-wrap">
+          <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="shopping_cart"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <input type="text" id="compras" value="100" inputmode="numeric">
+          <span class="prefix">R$</span>
+        </div>
+        <div class="hint">Insumos, energia, aluguel, serviços tributados.</div>
+      </div>
+      <div class="field">
+        <label for="red127">Profissão do art. 127</label>
+        <div class="input-wrap">
+          <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="discount"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          <select id="red127">
+            <option value="0" selected>Nenhuma — sem redução</option>
+            <optgroup label="Rol taxativo — redução de 30%">
+              <option value="0.30">Administradores</option>
+              <option value="0.30">Advogados</option>
+              <option value="0.30">Arquitetos e urbanistas</option>
+              <option value="0.30">Assistentes sociais</option>
+              <option value="0.30">Bibliotecários</option>
+              <option value="0.30">Biólogos</option>
+              <option value="0.30">Contabilistas</option>
+              <option value="0.30">Economistas</option>
+              <option value="0.30">Economistas domésticos</option>
+              <option value="0.30">Profissionais de educação física</option>
+              <option value="0.30">Engenheiros e agrônomos</option>
+              <option value="0.30">Estatísticos</option>
+              <option value="0.30">Médicos veterinários e zootecnistas</option>
+              <option value="0.30">Museólogos</option>
+              <option value="0.30">Químicos</option>
+              <option value="0.30">Profissionais de relações públicas</option>
+              <option value="0.30">Técnicos industriais</option>
+              <option value="0.30">Técnicos agrícolas</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="hint">Rol taxativo: quem não está na lista não tem a redução, mesmo em atividade intelectual.</div>
+      </div>
+    </div>
+
+    <div class="subhead">Perfil da clientela</div>
+    <div class="grid">
+      <div class="field">
+        <label for="b2b">% clientes do regime regular</label>
+        <div class="input-wrap">
+          <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="groups"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <input type="number" id="b2b" value="60" min="0" max="100" step="5" inputmode="numeric">
+          <span class="suffix">%</span>
+        </div>
+        <div class="hint">Só estes aproveitam o crédito cheio (art. 47 §9º).</div>
+      </div>
+      <div class="field">
+        <label for="bsn">% clientes do Simples por dentro</label>
+        <div class="input-wrap">
+          <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="store"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M8 21v-6h8v6"/></svg>
+          <input type="number" id="bsn" value="20" min="0" max="100" step="5" inputmode="numeric">
+          <span class="suffix">%</span>
+        </div>
+        <div class="hint" id="hint-final">Consumidor final: <b>20%</b> — não aproveita crédito.</div>
+      </div>
+      </div>
+    </div>
+    <div class="subhead" style="margin-top:22px">Premissas do cálculo</div>
+    <div class="iva-block" style="margin-top:0;padding-top:0;border-top:0">
+      <div class="field">
+        <label for="iva">Alíquota de IBS + CBS por fora <span class="val" id="iva-out">9,30%</span></label>
+        <input type="range" id="iva" min="5" max="30" step="0.1" value="9.3">
+        <div class="hint">Padrão: <b>2027</b> — CBS 9,20% (art. 347) + IBS 0,10% (art. 344). A referência da CBS ainda pende de Resolução do Senado. Arraste para simular anos posteriores da transição.</div>
+      </div>
+      <div class="field" style="margin-top:20px">
+        <label for="base">Base do IBS/CBS <span class="val" id="base-out"></span></label>
+        <div class="seg" id="seg-base">
+          <button type="button" class="seg-b active" data-v="1">Descontamino</button>
+          <button type="button" class="seg-b" data-v="0">Contamino</button>
+        </div>
+        <div class="hint" id="base-hint"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="verdict" id="verdict">
+    <div class="pill"><svg class="ic" id="v-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="hourglass_empty"><path d="M6 2h12M6 22h12M6 2c0 4 3 6 6 8 3 2 6 4 6 8M18 2c0 4-3 6-6 8-3 2-6 4-6 8"/></svg><span id="v-tag">Calculando…</span></div>
+    <h2 id="v-title"></h2>
+    <p class="lead" id="v-lead"></p>
+    <div class="big" id="v-big"></div>
+  </section>
+
+  <button class="reveal" id="reveal" aria-expanded="false">
+    <span id="reveal-label">Ver os números por trás do diagnóstico</span>
+    <svg class="ic chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="expand_more"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+
+  <div class="details" id="details">
+
+    <div class="stats">
+      <div class="stat"><div class="k">Faixa</div><div class="v" id="s-faixa"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="stairs"><path d="M3 20h4v-4h4v-4h4v-4h4V4"/></svg></div>
+      <div class="stat"><div class="k">Alíquota hoje</div><div class="v" id="s-aef"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="percent"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
+      <div class="stat"><div class="k">DAS atual</div><div class="v" id="s-das"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="receipt_long"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+      <div class="stat"><div class="k">Líquido atual</div><div class="v" id="s-liq"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="account_balance_wallet"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></div>
+    </div>
+
+    <div class="compare">
+      <div class="col conv">
+        <div class="ch"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="lock"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>CONVENCIONAL (tudo no SN)</div>
+        <div class="rw"><span>DAS (imposto único)</span><span class="n" id="c-das"></span></div>
+        <div class="rw muted"><span>IBS/CBS</span><span class="n">—</span></div>
+        <div class="rw muted"><span>Crédito de compras</span><span class="n">—</span></div>
+        <div class="rw tot"><span>Imposto do mês</span><span class="n" id="c-carga"></span></div>
+      </div>
+      <div class="col hib">
+        <div class="ch"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="call_split"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>Híbrido — IBS/CBS por fora</div>
+        <div class="rw"><span>DAS reduzido</span><span class="n" id="h-das"></span></div>
+        <div class="rw"><span>IBS/CBS sobre vendas</span><span class="n" id="h-deb"></span></div>
+        <div class="rw"><span>Crédito de compras</span><span class="n" id="h-cred"></span></div>
+        <div class="rw tot"><span>Imposto do mês<span class="micro">IBS/CBS é cobrado do cliente</span></span><span class="n" id="h-carga"></span></div>
+      </div>
+    </div>
+
+    <div class="eyebrow"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="redeem"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>Crédito que o seu cliente PJ recebe</div>
+    <div class="liq-pair">
+      <div class="scn">
+        <div class="nm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="lock"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Hoje — limitado ao DAS</div>
+        <div class="ds">No regime atual o crédito repassado é só a fração paga dentro do DAS.</div>
+        <div class="chip neutral"><div class="ger"><span>Total gerado na nota</span><span class="n" id="cc-conv-ger"></span></div><div class="k">Total aproveitado pelos clientes</div><div class="v" id="cc-conv"></div><div class="sub" id="cc-conv-p"></div></div>
+      </div>
+      <div class="scn">
+        <div class="nm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="call_split"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>Híbrido — alíquota cheia</div>
+        <div class="ds">No híbrido o cliente PJ se credita do IBS/CBS integral da nota.</div>
+        <div class="chip good"><div class="ger"><span>Total gerado na nota</span><span class="n" id="cc-hib-ger"></span></div><div class="k">Total aproveitado pelos clientes</div><div class="v" id="cc-hib"></div><div class="sub" id="cc-hib-p"></div></div>
+      </div>
+    </div>
+    <p class="foot-note">Esse crédito não sai do seu bolso — é o valor que o seu cliente pessoa jurídica abate dos próprios tributos. Quanto maior, mais atraente você fica como fornecedor no mercado B2B.</p>
+
+    <div class="eyebrow" style="margin-top:24px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="balance"><line x1="12" y1="3" x2="12" y2="21"/><path d="M5 7h14"/><path d="M5 7l-3 6a3 3 0 0 0 6 0z"/><path d="M19 7l-3 6a3 3 0 0 0 6 0z"/><path d="M8 21h8"/></svg>Resultado: os dois lados da balança</div>
+    <div class="liq-pair">
+      <div class="scn">
+        <div class="ln" style="padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:6px"><span style="color:var(--text-primary);font-weight:600">Custo extra do híbrido</span><span class="n" id="r-custo" style="font-weight:700"></span></div>
+        <div class="ds" style="margin:0">Quanto a mais o vendedor recolhe se cobrar o IBS/CBS por dentro. Positivo = o híbrido pesa mais no seu caixa.</div>
+      </div>
+      <div class="scn">
+        <div class="ln" style="padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:6px"><span style="color:var(--text-primary);font-weight:600">Crédito extra ao cliente</span><span class="n" id="r-cred" style="font-weight:700;color:var(--success)"></span></div>
+        <div class="ds" style="margin:0">Quanto a mais de crédito o seu cliente PJ ganha. Positivo = você fica mais competitivo no B2B.</div>
+      </div>
+    </div>
+
+
+    <div class="eyebrow" style="margin-top:24px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="gavel"><path d="M14 13l-3 3m0 0l-7 7m7-7l4 4m-4-4l3-3"/><path d="M16 5l3 3m-1.5-4.5l3 3a1 1 0 0 1 0 1.4l-2 2a1 1 0 0 1-1.4 0l-3-3a1 1 0 0 1 0-1.4l2-2a1 1 0 0 1 1.4 0z"/><path d="M3 21h8"/></svg>Pontos importantes antes de decidir</div>
+    <div class="notes-grid">
+      <div class="note-item">
+        <div class="note-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="event"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Prazo da opção</div>
+        <p>A opção pelo regime regular de IBS/CBS para vigência em 2027 deve ser feita no Portal do Simples Nacional entre <b>1º e 30 de setembro de 2026</b> (Resolução CGSN 186/2026). Pode ser cancelada até 30 de novembro de 2026. A escolha é semestral e irretratável dentro do período.</p>
+      </div>
+      <div class="note-item">
+        <div class="note-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="discount"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>Reduções de setor só no híbrido</div>
+        <p>As reduções da LC 214/2025 <b>não se aplicam a quem fica no DAS</b> — só valem no regime regular. A de 30% (art. 127) tem <b>rol taxativo de 18 profissões</b>: quem não está na lista não tem direito, mesmo exercendo atividade intelectual. Para pessoa jurídica, o §1º II exige que os sócios tenham habilitação ligada ao objeto social, estejam sob fiscalização do conselho e prestem eles próprios os serviços da atividade-fim. A redução de 60% (saúde, educação, medicamentos) não está nesta simulação.</p>
+      </div>
+      <div class="note-item">
+        <div class="note-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="receipt"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Crédito ao cliente é limitado</div>
+        <p>No regime atual, o crédito que o cliente PJ aproveita fica <b>limitado ao IBS/CBS efetivamente recolhido no PGDAS-D</b> — não à alíquota cheia. É por isso que o híbrido amplia tanto o crédito repassado: lá o cliente se credita pelo valor integral destacado na nota.</p>
+      </div>
+      <div class="note-item">
+        <div class="note-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="local_shipping"><rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 9h4l3 3v5h-7z"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>O preço do seu fornecedor</div>
+        <p>Esta conta assume que o fornecedor <b>não descontamina</b> o preço dele: mantém a base cheia e destaca o IBS/CBS por cima. Se ele descontaminar, o total que você paga fica igual ao de hoje e o crédito é um pouco menor. Não confunda com o seletor acima — lá é a <b>sua</b> base de débito; aqui é o <b>preço</b> que você paga na compra.</p>
+      </div>
+      <div class="note-item">
+        <div class="note-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="rule"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Mais obrigações no híbrido</div>
+        <p>Quem opta pelo regime regular fica sujeito à <b>apuração assistida obrigatória</b> do IBS e da CBS, com prazos e ajustes próprios a cada mês. É uma camada de complexidade operacional que não existe no DAS e que esta simulação não traduz em custo.</p>
+      </div>
+    </div>
+
+    <p class="disclaimer">
+      <b>Como ler isto.</b> A simulação usa as tabelas oficiais do Simples Nacional (Resolução CGSN 140/2018) e uma alíquota estimada de IBS/CBS, ajustável acima. Não considera mix de produtos com alíquota zero ou redução de 60% (arts. 133/146), ISS em valor fixo de sociedade uniprofissional, crédito de estoque na virada (art. 381), produtos monofásicos, substituição tributária, nem o custo da apuração assistida e do split payment. Cada um desses pontos pode alterar o resultado — traga o caso ao seu contador. Acima de R$ 3,6 milhões de faturamento anual, o IBS sai do DAS por obrigação. A transição é gradual entre 2029 e 2032 — os números refletem o quadro atual. Base legal: LC 214/2025, LC 227/2026 e Resolução CGSN 186/2026. Este diagnóstico é uma orientação inicial e não substitui a análise do seu contador.
+    </p>
+  </div>
+
+  <section class="cta">
+    <div class="cta-head">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <span>E agora, qual o próximo passo?</span>
+    </div>
+    <p class="cta-lead">A opção pelo regime híbrido precisa ser feita entre <b>1º e 30 de setembro de 2026</b>, no Portal do Simples Nacional, para valer a partir de janeiro de 2027. Depois desse prazo, só na próxima janela. Nos avise a sua decisão para que possamos providenciar tudo no tempo certo.</p>
+    <div class="cta-actions">
+      <a class="btn btn-primary" id="btn-decisao" href="#" target="_blank" rel="noopener">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        Enviar minha decisão para a Fortress
+      </a>
+      <a class="btn btn-ghost" id="btn-reuniao" href="#" target="_blank" rel="noopener">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Tenho dúvidas — quero agendar uma reunião
+      </a>
+    </div>
+    <div class="cta-alt">
+      <span>Ainda não é cliente Fortress?</span>
+      <a id="btn-naocliente" href="#" target="_blank" rel="noopener">Quero entender melhor e ser cliente
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <p>Fortress Contabilidade • Diagnóstico tributário</p>
+  </footer>
+
+</div>
+
+<script>
+// ===================================================================
+//  LINKS DA FORTRESS — edite aqui os três endereços
+// ===================================================================
+const LINKS = {
+  decisao:    "https://xxx",   // formulário para o cliente informar a decisão
+  reuniao:    "https://yyy",   // agendamento de reunião
+  naoCliente: "https://zzz"    // página para quem ainda não é cliente
+};
+
+const T = {"I":[[180000,0.04,0,0.155,0.34],[360000,0.073,5940,0.155,0.34],[720000,0.095,13860,0.155,0.335],[1800000,0.107,22500,0.155,0.335],[3600000,0.143,87300,0.155,0.335],[4800000,0.19,378000,0.155,0.335]],"II":[[180000,0.045,0,0.1785,0.32],[360000,0.078,5940,0.1785,0.32],[720000,0.1,13860,0.1785,0.32],[1800000,0.112,22500,0.1785,0.32],[3600000,0.147,85500,0.1785,0.32],[4800000,0.3,720000,0.1785,0.32]],"III":[[180000,0.06,0,0.166,0.325],[360000,0.112,9360,0.166,0.325],[720000,0.135,17640,0.166,0.325],[1800000,0.16,35640,0.166,0.325],[3600000,0.21,125640,0.166,0.325],[4800000,0.33,648000,0.166,0.325]],"IV":[[180000,0.045,0,0.24,0.40],[360000,0.09,8100,0.24,0.40],[720000,0.102,12420,0.24,0.40],[1800000,0.14,39780,0.24,0.40],[3600000,0.22,183780,0.24,0.40],[4800000,0.33,828000,0.24,0.40]],"V":[[180000,0.155,0,0.1915,0.21],[360000,0.18,4500,0.1915,0.21],[720000,0.195,9900,0.1915,0.21],[1800000,0.205,17100,0.1915,0.21],[3600000,0.23,62100,0.1915,0.21],[4800000,0.305,540000,0.1915,0.21]]};
+const brl = n => "R$ " + n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const pctS = (n,c=4) => (n*100).toFixed(c).replace(".",",")+"%";
+const ids = ["anexo","rbt12","recmes","compras","b2b","bsn","red127","iva"];
+let descontamina = true;   // seletor de base (art. 12 §2º V)
+
+// remove tudo que não for dígito e converte para número inteiro de reais
+function parseNum(str){
+  const digits = String(str).replace(/\D/g,"");
+  return digits ? parseInt(digits,10) : 0;
+}
+// aplica separador de milhar enquanto o usuário digita
+function maskMilhar(el){
+  const n = parseNum(el.value);
+  el.value = n ? n.toLocaleString("pt-BR") : "";
+}
+
+function calc(){
+  const anexo=document.getElementById("anexo").value;
+  const rbt12=Math.max(0,parseNum(document.getElementById("rbt12").value));
+  const recmes=Math.max(0,parseNum(document.getElementById("recmes").value));
+  const compras=Math.max(0,parseNum(document.getElementById("compras").value));
+  const b2b=Math.min(1,Math.max(0,+document.getElementById("b2b").value/100));
+  const bsn=Math.min(1-b2b,Math.max(0,+document.getElementById("bsn").value/100));
+  const bfinal=Math.max(0,1-b2b-bsn);
+  const red127=+document.getElementById("red127").value;
+  const iva=+document.getElementById("iva").value/100;
+  const ivaEf=iva*(1-red127);   // alíquota efetiva por fora, com redução do art. 127
+  document.getElementById("iva-out").textContent=(iva*100).toFixed(2).replace(".",",")+"%";
+  document.getElementById("hint-final").innerHTML="Consumidor final: <b>"+(bfinal*100).toFixed(0)+"%</b> — não aproveita crédito.";
+
+  const tbl=T[anexo];
+  let fi=tbl.findIndex(f=>rbt12<=f[0]); if(fi===-1)fi=5;
+  const [lim,nom,ded,rep,repIcmsIss]=tbl[fi];
+  const aef=rbt12>0?(rbt12*nom-ded)/rbt12:0;
+  const parc=aef*rep;
+  const dasHoje=recmes*aef;
+  const liqHoje=recmes-dasHoje;
+
+  document.getElementById("s-faixa").textContent=(fi+1)+"ª";
+  document.getElementById("s-aef").textContent=(aef*100).toFixed(2).replace(".",",")+"%";
+  document.getElementById("s-das").textContent=brl(dasHoje);
+  document.getElementById("s-liq").textContent=brl(liqHoje);
+
+  const dasRed=recmes*(aef-parc);
+  const cred=compras*iva;
+  // Base do IBS/CBS: art. 12 §2º V manda excluir o ICMS/ISS incidente na operação
+  const icmsIssContido = recmes*aef*repIcmsIss;
+  const baseIbs = descontamina ? recmes - icmsIssContido : recmes;
+  const deb=baseIbs*ivaEf;
+  const cargaHib=dasRed+deb-cred;
+  document.getElementById("base-out").textContent=brl(baseIbs);
+  const pctIcmsIss = aef*repIcmsIss;
+  document.getElementById("base-hint").innerHTML = descontamina
+    ? "Sai da base o ICMS/ISS contido no preço: <b>"+pctS(pctIcmsIss)+"</b> ("+brl(icmsIssContido)+" no mês). Esse percentual vale para qualquer nota — numa venda de R$ 1.000, saem "+brl(1000*pctIcmsIss)+" da base. O seu preço não muda: o IBS/CBS entra por cima. Art. 12 §2º V e Parecer Técnico 57/2026."
+    : "Base integral, sem excluir o ICMS/ISS contido no preço. É a tese contrária (art. 18 §3º), mantida como cautela: gera um débito maior.";
+
+  document.getElementById("c-das").textContent=brl(dasHoje);
+  document.getElementById("c-carga").textContent=brl(dasHoje);
+  document.getElementById("h-das").textContent=brl(dasRed);
+  document.getElementById("h-deb").textContent=brl(deb);
+  document.getElementById("h-cred").textContent="−"+brl(cred);
+  document.getElementById("h-carga").textContent=brl(cargaHib);
+
+  // Crédito repassado ao cliente (art. 47 §9º)
+  // Hoje: regular e Simples-por-dentro levam o montante embutido no DAS.
+  // Híbrido: só o cliente do regime regular aproveita o destaque cheio.
+  const credCliConv = recmes*(b2b+bsn)*aef*rep;
+  const credCliHib  = baseIbs*b2b*ivaEf;
+  // Total GERADO na nota (sem ponderar pela carteira)
+  const credGerConv = recmes*aef*rep;      // parcela de CBS/IBS embutida no DAS
+  const credGerHib  = baseIbs*ivaEf;       // débito cheio destacado
+  document.getElementById("cc-conv-ger").textContent=brl(credGerConv);
+  document.getElementById("cc-hib-ger").textContent=brl(credGerHib);
+  // Total APROVEITADO pelos clientes
+  document.getElementById("cc-conv").textContent=brl(credCliConv);
+  document.getElementById("cc-hib").textContent=brl(credCliHib);
+  // percentual sobre a nota — permite ao cliente aplicar por unidade vendida
+  const pctCredConv = aef*rep;                                  // do valor da nota
+  const pctCredHib  = ivaEf*(descontamina?(1-pctIcmsIss):1);     // do valor da nota
+  document.getElementById("cc-conv-p").textContent=pctS(pctCredConv,2)+" da nota × "+((b2b+bsn)*100).toFixed(0)+"% da carteira";
+  document.getElementById("cc-hib-p").textContent=pctS(pctCredHib,2)+" da nota × "+(b2b*100).toFixed(0)+"% da carteira";
+
+  // Resultado: custo extra (vendedor) e crédito extra (cliente)
+  const custoExtra = cargaHib - dasHoje;
+  const credExtra  = credCliHib - credCliConv;
+  document.getElementById("r-custo").textContent=(custoExtra>=0?"+":"−")+brl(Math.abs(custoExtra)).replace("R$ ","R$ ");
+  document.getElementById("r-cred").textContent=(credExtra>=0?"+":"−")+brl(Math.abs(credExtra)).replace("R$ ","R$ ");
+
+
+  const v=document.getElementById("verdict");
+  const icon=document.getElementById("v-icon");
+  const tag=document.getElementById("v-tag");
+  const title=document.getElementById("v-title");
+  const lead=document.getElementById("v-lead");
+  const big=document.getElementById("v-big");
+  v.classList.remove("go","warn","stop");
+
+  // Regra da planilha: SE (crédito extra ao cliente) > (custo extra do vendedor) → híbrido compensa
+  const hibridoCompensa = credExtra > custoExtra;
+
+  if(rbt12>3600000){
+    v.classList.add("warn"); icon.textContent="warning";
+    tag.textContent="Atenção — caso especial";
+    title.textContent="Seu faturamento exige análise individual";
+    lead.textContent="Acima de R$ 3,6 milhões por ano, parte do IBS sai do DAS por obrigação legal e a regra geral não se aplica diretamente. Leve este resultado ao seu contador para uma análise dedicada.";
+    big.innerHTML="";
+  } else if(hibridoCompensa){
+    v.classList.add("go"); icon.textContent="trending_up";
+    tag.textContent="Híbrido tende a compensar";
+    title.textContent="O regime híbrido tende a compensar";
+    lead.textContent="O crédito extra que você repassa ao cliente supera o custo adicional do vendedor. Isso aumenta sua competitividade no mercado B2B sem corroer seu resultado.";
+    big.innerHTML="";
+  } else {
+    v.classList.add("stop"); icon.textContent="trending_down";
+    tag.textContent="Convencional tende a compensar";
+    title.textContent="O regime convencional tende a compensar";
+    lead.textContent="O custo extra do híbrido supera o ganho de crédito repassado ao cliente. Manter o regime atual preserva melhor o seu resultado.";
+    big.innerHTML="";
+  }
+}
+ids.forEach(id=>{const el=document.getElementById(id);el.addEventListener("input",calc);el.addEventListener("change",calc);});
+
+// máscara de milhar nos campos de valor (formata enquanto digita)
+["rbt12","recmes","compras"].forEach(id=>{
+  const el=document.getElementById(id);
+  el.addEventListener("input",()=>{maskMilhar(el);});
+});
+
+document.querySelectorAll("#seg-base .seg-b").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("#seg-base .seg-b").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    descontamina = btn.dataset.v==="1";
+    calc();
+  });
+});
+
+const reveal=document.getElementById("reveal");
+const details=document.getElementById("details");
+const rl=document.getElementById("reveal-label");
+reveal.addEventListener("click",()=>{
+  const open=details.classList.toggle("open");
+  reveal.classList.toggle("open",open);
+  reveal.setAttribute("aria-expanded",open);
+  rl.textContent=open?"Ocultar os números":"Ver os números por trás do diagnóstico";
+});
+document.getElementById("btn-decisao").href=LINKS.decisao;
+document.getElementById("btn-reuniao").href=LINKS.reuniao;
+document.getElementById("btn-naocliente").href=LINKS.naoCliente;
+
+calc();
+</script>
+</body>
+</html>
