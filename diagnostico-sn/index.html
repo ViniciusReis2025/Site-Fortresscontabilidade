@@ -173,6 +173,8 @@
     padding:16px 18px;position:relative}
   .stat .k{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)}
   .stat .v{font-size:22px;font-weight:600;margin-top:8px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stat .sub{font-size:10.5px;color:var(--text-disabled);margin-top:5px;line-height:1.35}
+  .stat .sub b{color:var(--text-muted);font-weight:600;font-variant-numeric:tabular-nums}
   .stat .ic{position:absolute;right:16px;top:16px;color:var(--primary);opacity:.75}
 
   .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
@@ -354,22 +356,22 @@
     <div class="subhead">Perfil da clientela</div>
     <div class="grid">
       <div class="field">
-        <label for="b2b">% VENDAS PARA EMPRESAS FORA DO SIMPLES</label>
+        <label for="b2b">% vendas para empresas fora do Simples</label>
         <div class="input-wrap">
           <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="groups"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <input type="number" id="b2b" value="60" min="0" max="100" step="5" inputmode="numeric">
           <span class="suffix">%</span>
         </div>
-        <div class="hint">Lucro Real ou Presumido. Estes aproveitam o crédito cheio, é o que mais influencia. (art. 47 §9º).</div>
+        <div class="hint">Lucro Real ou Presumido. Só estes aproveitam o crédito cheio — é o que mais decide.</div>
       </div>
       <div class="field">
-        <label for="bsn">% VENDAS PARA EMPRESAS DO SIMPLES NACIONAL</label>
+        <label for="bsn">% vendas para empresas do Simples</label>
         <div class="input-wrap">
           <svg class="ic lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="store"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M8 21v-6h8v6"/></svg>
           <input type="number" id="bsn" value="20" min="0" max="100" step="5" inputmode="numeric">
           <span class="suffix">%</span>
         </div>
-        <div class="hint" id="hint-final">Restante: <b>20%</b> para consumidor final, que nunca aproveita crédito.</div>
+        <div class="hint" id="hint-final">Restante: <b>20%</b> para consumidor final — que nunca aproveita crédito.</div>
       </div>
       </div>
     </div>
@@ -407,7 +409,7 @@
 
     <div class="stats">
       <div class="stat"><div class="k">Faixa</div><div class="v" id="s-faixa"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="stairs"><path d="M3 20h4v-4h4v-4h4v-4h4V4"/></svg></div>
-      <div class="stat"><div class="k">Alíquota hoje</div><div class="v" id="s-aef"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="percent"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
+      <div class="stat"><div class="k">Alíquota hoje</div><div class="v" id="s-aef"></div><div class="sub" id="s-piscofins"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="percent"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
       <div class="stat"><div class="k">DAS atual</div><div class="v" id="s-das"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="receipt_long"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
       <div class="stat"><div class="k">Líquido atual</div><div class="v" id="s-liq"></div><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-icon="account_balance_wallet"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></div>
     </div>
@@ -521,9 +523,9 @@
 //  LINKS DA FORTRESS — edite aqui os três endereços
 // ===================================================================
 const LINKS = {
-  decisao:    "https://forms.cloud.microsoft/r/4CPNNf5s6J",   // formulário para o cliente informar a decisão
-  reuniao:    "https://wa.me/5531984701815",   // agendamento de reunião
-  naoCliente: "https://wa.me/5531984701815"    // página para quem ainda não é cliente
+  decisao:    "https://xxx",   // formulário para o cliente informar a decisão
+  reuniao:    "https://yyy",   // agendamento de reunião
+  naoCliente: "https://zzz"    // página para quem ainda não é cliente
 };
 
 const T = {"I":[[180000,0.04,0,0.155,0.34],[360000,0.073,5940,0.155,0.34],[720000,0.095,13860,0.155,0.335],[1800000,0.107,22500,0.155,0.335],[3600000,0.143,87300,0.155,0.335],[4800000,0.19,378000,0.155,0.335]],"II":[[180000,0.045,0,0.1785,0.32],[360000,0.078,5940,0.1785,0.32],[720000,0.1,13860,0.1785,0.32],[1800000,0.112,22500,0.1785,0.32],[3600000,0.147,85500,0.1785,0.32],[4800000,0.3,720000,0.1785,0.32]],"III":[[180000,0.06,0,0.166,0.325],[360000,0.112,9360,0.166,0.325],[720000,0.135,17640,0.166,0.325],[1800000,0.16,35640,0.166,0.325],[3600000,0.21,125640,0.166,0.325],[4800000,0.33,648000,0.166,0.325]],"IV":[[180000,0.045,0,0.24,0.40],[360000,0.09,8100,0.24,0.40],[720000,0.102,12420,0.24,0.40],[1800000,0.14,39780,0.24,0.40],[3600000,0.22,183780,0.24,0.40],[4800000,0.33,828000,0.24,0.40]],"V":[[180000,0.155,0,0.1915,0.21],[360000,0.18,4500,0.1915,0.21],[720000,0.195,9900,0.1915,0.21],[1800000,0.205,17100,0.1915,0.21],[3600000,0.23,62100,0.1915,0.21],[4800000,0.305,540000,0.1915,0.21]]};
@@ -555,7 +557,7 @@ function calc(){
   const iva=+document.getElementById("iva").value/100;
   const ivaEf=iva*(1-red127);   // alíquota efetiva por fora, com redução do art. 127
   document.getElementById("iva-out").textContent=(iva*100).toFixed(2).replace(".",",")+"%";
-  document.getElementById("hint-final").innerHTML="Consumidor final: <b>"+(bfinal*100).toFixed(0)+"%</b> — não aproveita crédito.";
+  document.getElementById("hint-final").innerHTML="Restante: <b>"+(bfinal*100).toFixed(0)+"%</b> para consumidor final — que nunca aproveita crédito.";
 
   const tbl=T[anexo];
   let fi=tbl.findIndex(f=>rbt12<=f[0]); if(fi===-1)fi=5;
@@ -567,6 +569,10 @@ function calc(){
 
   document.getElementById("s-faixa").textContent=(fi+1)+"ª";
   document.getElementById("s-aef").textContent=(aef*100).toFixed(2).replace(".",",")+"%";
+  // PIS/Cofins embutido no DAS = a parcela que vira CBS em 2027
+  const pisCofinsPct = aef*rep;
+  const pisCofinsVal = recmes*pisCofinsPct;
+  document.getElementById("s-piscofins").innerHTML="PIS/Cofins: <b>"+brl(pisCofinsVal)+"</b> ("+(pisCofinsPct*100).toFixed(2).replace(".",",")+"%) → vira CBS";
   document.getElementById("s-das").textContent=brl(dasHoje);
   document.getElementById("s-liq").textContent=brl(liqHoje);
 
