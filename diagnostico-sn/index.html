@@ -572,7 +572,7 @@ function calc(){
   // PIS/Cofins embutido no DAS = a parcela que vira CBS em 2027
   const pisCofinsPct = aef*rep;
   const pisCofinsVal = recmes*pisCofinsPct;
-  document.getElementById("s-piscofins").innerHTML="PIS/Cofins: <b>"+brl(pisCofinsVal)+"</b> ("+(pisCofinsPct*100).toFixed(2).replace(".",",")+"%) → vira CBS";
+  document.getElementById("s-piscofins").innerHTML="PIS/Cofins: <b>"+brl(pisCofinsVal)+"</b> ("+(pisCofinsPct*100).toFixed(3).replace(".",",")+"%) → vira CBS";
   document.getElementById("s-das").textContent=brl(dasHoje);
   document.getElementById("s-liq").textContent=brl(liqHoje);
 
