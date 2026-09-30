@@ -3,7 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortress Contabilidade - Sua Contabilidade de Confiança</title>
+    <title>Contabilidade em BH – Guarani | Fortress Contabilidade</title>
+    <meta name="description" content="Escritório de contabilidade no Guarani, BH. Simples Nacional, MEI, abertura de empresas, departamento pessoal, planejamento tributário e Imposto de Renda.">
+    <link rel="canonical" href="https://fortresscontabilidade.com.br/">
+    <meta name="theme-color" content="#1565C0">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Fortress Contabilidade">
+    <meta property="og:title" content="Fortress Contabilidade – Contabilidade em BH">
+    <meta property="og:description" content="Contabilidade para micro e pequenas empresas em Belo Horizonte. Fale direto com quem cuida da sua empresa.">
+    <meta property="og:url" content="https://fortresscontabilidade.com.br/">
+    <meta property="og:image" content="https://fortresscontabilidade.com.br/assets/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Logotipo da Fortress Contabilidade – Contabilidade em Belo Horizonte">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicons -->
+    <link rel="icon" href="/assets/logo/favicon.ico" sizes="any">
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/assets/logo/favicon-192.png" type="image/png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/assets/logo/apple-touch-icon.png">
+
+    <!-- Dados estruturados -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "AccountingService",
+        "@id": "https://fortresscontabilidade.com.br/#empresa",
+        "name": "Fortress Contabilidade",
+        "url": "https://fortresscontabilidade.com.br/",
+        "logo": "https://fortresscontabilidade.com.br/assets/logo/fortress-logo-vertical.png",
+        "image": "https://fortresscontabilidade.com.br/assets/og-image.jpg",
+        "description": "Escritório de contabilidade em Belo Horizonte, no Guarani. Contabilidade para Simples Nacional, MEI e Lucro Presumido, abertura de empresas, departamento pessoal, planejamento tributário e Imposto de Renda.",
+        "telephone": "+55-31-3504-3720",
+        "email": "contato@fortresscontabilidade.com.br",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Av. Waldomiro Lobo, 681 - Sobreloja",
+            "addressLocality": "Belo Horizonte",
+            "addressRegion": "MG",
+            "postalCode": "31814-620",
+            "addressCountry": "BR"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -19.8443337,
+            "longitude": -43.9252778
+        },
+        "areaServed": [
+            { "@type": "City", "name": "Belo Horizonte" },
+            { "@type": "Country", "name": "Brasil" }
+        ],
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "09:00",
+                "closes": "12:00"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "13:00",
+                "closes": "18:00"
+            }
+        ],
+        "sameAs": [
+            "https://www.instagram.com/fortress.contabilidade",
+            "https://www.linkedin.com/in/fortress-contabilidade-901690175",
+            "https://www.facebook.com/fortresscontabilidade"
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Serviços contábeis",
+            "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Contabilidade para Simples Nacional, MEI e Lucro Presumido" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Abertura, alteração e baixa de empresas" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Departamento pessoal e folha de pagamento" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Planejamento tributário" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Declaração de Imposto de Renda" } }
+            ]
+        }
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -70,8 +155,10 @@
         <header class="glass-effect shadow-luxury fixed w-full top-0 z-50 border-b border-gray-100">
             <nav class="container mx-auto px-6 py-4">
                 <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <img src="https://i.ibb.co/zV6s5Nj7/novo-logotipo-removebg-preview.png" alt="Fortress Contabilidade" class="h-14 w-auto filter drop-shadow-lg">
+                    <div class="flex items-center mr-8">
+                        <a href="/" aria-label="Fortress Contabilidade – página inicial">
+                            <img src="/assets/logo/fortress-logo-horizontal.svg" alt="Fortress Contabilidade – contabilidade em Belo Horizonte" width="204" height="44" class="h-9 md:h-11 w-auto">
+                        </a>
                     </div>
                     
                     <!-- Desktop Menu -->
@@ -154,13 +241,18 @@
                         </span>
                     </div>
                     
-                    <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight">
-                        Sua Contabilidade de 
+                    <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                        Contabilidade em
                         <span class="gradient-text bg-gradient-to-r from-fortress-amber to-yellow-300 bg-clip-text text-transparent">
-                            Confiança
+                            Belo Horizonte
                         </span>
+                        para micro e pequenas empresas
                     </h1>
-                    
+
+                    <p class="text-2xl md:text-3xl font-bold mb-8 text-white">
+                        Sua Contabilidade de Confiança
+                    </p>
+
                     <p class="text-xl md:text-2xl mb-12 text-blue-100 max-w-3xl mx-auto font-light leading-relaxed">
                         Transformamos a gestão contábil da sua empresa com soluções inovadoras, 
                         tecnologia de ponta e atendimento personalizado para o seu negócio prosperar
@@ -359,6 +451,23 @@
                         </ul>
                     </div>
                 </div>
+
+                <!-- Ferramenta: Diagnóstico Simples Híbrido -->
+                <div class="mt-16 luxury-card rounded-2xl p-8 md:p-10 border border-gray-100 shadow-luxury flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center gap-6">
+                        <div class="w-16 h-16 flex-shrink-0 bg-gradient-to-br from-fortress-amber to-yellow-500 rounded-2xl flex items-center justify-center text-white text-2xl">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div>
+                            <span class="text-sm font-semibold text-fortress-blue uppercase">Ferramenta gratuita</span>
+                            <h3 class="text-2xl font-bold text-fortress-blue-dark">O Simples Híbrido vale a pena para a sua empresa?</h3>
+                            <p class="text-fortress-gray-dark">Faça o diagnóstico em poucos minutos e descubra.</p>
+                        </div>
+                    </div>
+                    <a href="/diagnostico-sn/" class="flex-shrink-0 bg-gradient-to-r from-fortress-blue to-fortress-blue-light text-white px-8 py-4 rounded-xl hover:shadow-luxury transition-all duration-300 font-semibold transform hover:scale-105">
+                        Fazer o diagnóstico<i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -388,7 +497,7 @@
                         </div>
                         <div class="text-center">
                             <div class="bg-fortress-gray-light rounded-lg p-8">
-                                <img src="https://i.ibb.co/zV6s5Nj7/novo-logotipo-removebg-preview.png" alt="Fortress Contabilidade" class="h-40 w-auto mx-auto mb-4">
+                                <img src="/assets/logo/fortress-logo-vertical.svg" alt="Logotipo da Fortress Contabilidade, escritório de contabilidade no Guarani, Belo Horizonte" width="163" height="160" loading="lazy" class="h-40 w-auto mx-auto mb-4">
                                 <h3 class="text-2xl font-bold text-fortress-blue-dark mb-4">Confiança e Segurança</h3>
                                 <p class="text-fortress-gray-dark">
                                     Sua empresa em mãos seguras, com profissionais qualificados e tecnologia de ponta para garantir a melhor gestão contábil.
@@ -487,21 +596,21 @@
                 <div class="grid md:grid-cols-5 gap-8">
                     <!-- Logo e Descrição -->
                     <div class="md:col-span-2">
-                        <img src="https://i.ibb.co/zV6s5Nj7/novo-logotipo-removebg-preview.png" alt="Fortress Contabilidade" class="h-16 w-auto mb-4 filter brightness-0 invert">
+                        <img src="/assets/logo/fortress-logo-horizontal-branco.svg" alt="Fortress Contabilidade" width="204" height="44" loading="lazy" class="h-11 w-auto mb-4">
                         <p class="text-blue-200 mb-6">
                             Sua contabilidade de confiança há mais de 15 anos. Oferecemos soluções completas para o crescimento do seu negócio.
                         </p>
                         <div class="flex space-x-4">
-                            <a href="#" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
+                            <a href="https://www.facebook.com/fortresscontabilidade" target="_blank" rel="noopener" aria-label="Facebook da Fortress Contabilidade" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a href="https://www.instagram.com/fortress.contabilidade" target="_blank" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
+                            <a href="https://www.instagram.com/fortress.contabilidade" target="_blank" rel="noopener" aria-label="Instagram da Fortress Contabilidade" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="https://www.linkedin.com/in/fortress-contabilidade-901690175" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
+                            <a href="https://www.linkedin.com/in/fortress-contabilidade-901690175" target="_blank" rel="noopener" aria-label="LinkedIn da Fortress Contabilidade" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
                                 <i class="fab fa-linkedin"></i>
                             </a>
-                            <a href="https://wa.me/5531984701815" target="_blank" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
+                            <a href="https://wa.me/5531984701815" target="_blank" rel="noopener" aria-label="WhatsApp da Fortress Contabilidade" class="text-blue-200 hover:text-fortress-amber transition-colors text-2xl">
                                 <i class="fab fa-whatsapp"></i>
                             </a>
                         </div>
@@ -537,7 +646,7 @@
                         <div class="text-blue-200">
                             <div class="flex items-center">
                                 <i class="fas fa-clock mr-3"></i>
-                                <span>De segunda à sexta, das 9:00 às 18:00</span>
+                                <span>Seg a sex, 9h–12h e 13h–18h</span>
                             </div>
                         </div>
                     </div>
@@ -555,7 +664,7 @@
                 </div>
                 
                 <div class="border-t border-blue-800 mt-12 pt-8 text-center text-blue-200">
-                    <p>&copy; 2025 Fortress Contabilidade CRC-MG 11992 - CNPJ: 20.276.891/0001-10. Todos os direitos reservados.</p>
+                    <p>&copy; <span id="ano-atual">2026</span> Fortress Contabilidade CRC-MG 11992 - CNPJ: 20.276.891/0001-10. Todos os direitos reservados.</p>
                 </div>
             </div>
         </footer>
@@ -578,6 +687,8 @@
                 }
             },
             mounted() {
+                document.getElementById('ano-atual').textContent = new Date().getFullYear();
+
                 // Smooth scrolling for anchor links
                 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     anchor.addEventListener('click', function (e) {

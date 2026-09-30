@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 714.2 714.2" width="714" height="714" role="img" aria-label="Fortress Contabilidade – símbolo">
+  <title>Fortress Contabilidade – símbolo</title>
+  <defs>
+  </defs>
+  <g transform="translate(207.1,69.1)">
+    <polygon points="200,0 300,64 300,192 200,128" fill="#FFFFFF" fill-opacity="0.95"/>
+    <polygon points="100,64 200,128 100,192" fill="#FFFFFF" fill-opacity="0.55"/>
+    <polygon points="100,192 200,128 200,256 100,320" fill="#FFFFFF" fill-opacity="0.8"/>
+    <polygon points="100,320 200,256 300,320 200,384" fill="#FFFFFF" fill-opacity="1"/>
+    <polygon points="0,256 100,320 100,448 0,384" fill="#FFFFFF" fill-opacity="0.9"/>
+    <polygon points="100,448 200,512 100,576" fill="#FFFFFF" fill-opacity="0.75"/>
+    <polygon points="200,384 300,448 300,576 200,512" fill="#FFFFFF" fill-opacity="0.55"/>
+  </g>
+</svg>

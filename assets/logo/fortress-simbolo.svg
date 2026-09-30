@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 714.2 714.2" width="714" height="714" role="img" aria-label="Fortress Contabilidade – símbolo">
+  <title>Fortress Contabilidade – símbolo</title>
+  <defs>
+    <linearGradient id="gTopR" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#314579"/><stop offset="1" stop-color="#3B3166"/></linearGradient>
+    <linearGradient id="gMidL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0A6296"/><stop offset="1" stop-color="#2A5183"/></linearGradient>
+    <linearGradient id="gLeftP" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#017FB8"/><stop offset="1" stop-color="#006DA4"/></linearGradient>
+  </defs>
+  <g transform="translate(207.1,69.1)">
+    <polygon points="200,0 300,64 300,192 200,128" fill="url(#gTopR)"/>
+    <polygon points="100,64 200,128 100,192" fill="#2F3F5C"/>
+    <polygon points="100,192 200,128 200,256 100,320" fill="url(#gMidL)"/>
+    <polygon points="100,320 200,256 300,320 200,384" fill="#31639C"/>
+    <polygon points="0,256 100,320 100,448 0,384" fill="url(#gLeftP)"/>
+    <polygon points="100,448 200,512 100,576" fill="#30629B"/>
+    <polygon points="200,384 300,448 300,576 200,512" fill="#2F3E5A"/>
+  </g>
+</svg>
