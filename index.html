@@ -155,14 +155,14 @@
         <header class="glass-effect shadow-luxury fixed w-full top-0 z-50 border-b border-gray-100">
             <nav class="container mx-auto px-6 py-4">
                 <div class="flex justify-between items-center">
-                    <div class="flex items-center mr-8">
+                    <div class="flex items-center mr-6 xl:mr-8">
                         <a href="/" aria-label="Fortress Contabilidade – página inicial">
                             <img src="/assets/logo/fortress-logo-horizontal.svg" alt="Fortress Contabilidade – contabilidade em Belo Horizonte" width="204" height="44" class="h-9 md:h-11 w-auto">
                         </a>
                     </div>
                     
                     <!-- Desktop Menu -->
-                    <div class="hidden md:flex space-x-10">
+                    <div class="hidden lg:flex space-x-6 xl:space-x-8 whitespace-nowrap">
                         <a href="#inicio" class="text-fortress-gray-dark hover:text-fortress-blue transition-all duration-300 font-medium relative group">
                             Início
                             <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-fortress-blue transition-all duration-300 group-hover:w-full"></span>
@@ -194,20 +194,20 @@
                     </div>
                     
                     <!-- CTA Button Desktop -->
-                    <div class="hidden md:block">
+                    <div class="hidden xl:block ml-8 whitespace-nowrap">
                         <a href="https://wa.me/5531984701815" target="_blank" class="bg-gradient-to-r from-fortress-amber to-yellow-500 text-white px-8 py-3 rounded-xl hover:shadow-luxury transition-all duration-300 font-semibold transform hover:scale-105">
                             <i class="fab fa-whatsapp mr-2"></i>Fale Conosco
                         </a>
                     </div>
                     
                     <!-- Mobile Menu Button -->
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-fortress-blue">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-fortress-blue">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
                 
                 <!-- Mobile Menu -->
-                <div v-show="mobileMenuOpen" class="md:hidden mt-4 pb-4">
+                <div v-show="mobileMenuOpen" class="lg:hidden mt-4 pb-4">
                     <div class="flex flex-col space-y-4">
                         <a href="#inicio" @click="mobileMenuOpen = false" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Início</a>
                         <a href="#servicos" @click="mobileMenuOpen = false" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Serviços</a>
