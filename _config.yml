@@ -1,0 +1,12 @@
+# Configuração do GitHub Pages (Jekyll).
+#
+# ATENÇÃO: não adicione front matter (bloco --- no topo) aos arquivos HTML.
+# Com front matter, o Jekyll processa o arquivo com Liquid, que interpreta
+# {{ }} e {% %} e quebraria os templates do Vue. Sem front matter, os HTML
+# são publicados exatamente como estão.
+#
+# O jekyll-sitemap gera /sitemap.xml automaticamente a cada deploy,
+# incluindo toda página nova (pasta/index.html). O 404.html fica de fora.
+url: "https://fortresscontabilidade.com.br"
+plugins:
+  - jekyll-sitemap

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada | Fortress Contabilidade</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#1565C0">
+    <link rel="icon" href="/assets/logo/favicon.ico" sizes="any">
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/logo/apple-touch-icon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fortress-blue': '#1565C0',
+                        'fortress-blue-light': '#42A5F5',
+                        'fortress-blue-dark': '#0D47A1',
+                        'fortress-gray-dark': '#343A40',
+                        'fortress-gray-light': '#F5F5F5',
+                        'fortress-amber': '#FFC107'
+                    },
+                    fontFamily: {
+                        'luxury': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'luxury': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                        'luxury-lg': '0 35px 60px -12px rgba(0, 0, 0, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+    </style>
+</head>
+<body class="bg-white text-fortress-gray-dark font-luxury min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="glass-effect shadow-luxury w-full border-b border-gray-100">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" aria-label="Fortress Contabilidade – página inicial">
+                <img src="/assets/logo/fortress-logo-horizontal.svg" alt="Fortress Contabilidade – contabilidade em Belo Horizonte" width="204" height="44" class="h-9 md:h-11 w-auto">
+            </a>
+            <a href="/" class="hidden sm:inline-block text-fortress-gray-dark hover:text-fortress-blue transition-colors font-medium">
+                <i class="fas fa-arrow-left mr-2"></i>Voltar ao início
+            </a>
+        </nav>
+    </header>
+
+    <!-- Conteúdo -->
+    <main class="flex-1 flex items-center bg-gradient-to-br from-fortress-blue via-fortress-blue-light to-fortress-blue-dark text-white">
+        <div class="container mx-auto px-6 py-24 text-center max-w-3xl">
+            <div class="text-7xl md:text-8xl font-black text-fortress-amber mb-6">404</div>
+            <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight">Página não encontrada</h1>
+            <p class="text-xl text-blue-100 mb-12 font-light leading-relaxed">
+                O endereço que você acessou não existe ou mudou de lugar.
+                Volte para a página inicial ou fale com a gente pelo WhatsApp.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="/" class="border-2 border-white/30 text-white px-10 py-5 rounded-2xl hover:bg-white hover:text-fortress-blue transition-all duration-300 font-semibold text-lg">
+                    <i class="fas fa-home mr-2"></i>Ir para a página inicial
+                </a>
+                <a href="https://wa.me/5531984701815?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Fortress%20Contabilidade." target="_blank" rel="noopener" class="bg-gradient-to-r from-fortress-amber to-yellow-500 text-white px-10 py-5 rounded-2xl hover:shadow-luxury-lg transition-all duration-300 font-bold text-lg">
+                    <i class="fab fa-whatsapp mr-2 text-xl"></i>Falar no WhatsApp
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-fortress-blue-dark text-blue-200 py-8 text-center text-sm px-4">
+        <p>Fortress Contabilidade · Av. Waldomiro Lobo, 681 - Sobreloja, Guarani, Belo Horizonte - MG · (31) 3504-3720</p>
+        <p class="mt-2">&copy; <span id="ano-atual">2026</span> Fortress Contabilidade CRC-MG 11992 - CNPJ: 20.276.891/0001-10.</p>
+    </footer>
+
+    <script>
+        document.getElementById('ano-atual').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
