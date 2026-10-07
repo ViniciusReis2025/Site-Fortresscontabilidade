@@ -340,10 +340,145 @@
             display: none;
         }
     </style>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        .indice-temas {
+            position: sticky;
+            top: var(--altura-cabecalho, 77px);
+            z-index: 40;
+        }
+        .lista-temas {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x proximity;
+            scrollbar-width: thin;
+            padding-bottom: 0.25rem;
+        }
+        /* Degradê na borda direita quando há mais temas para rolar */
+        .faixa-temas {
+            position: relative;
+        }
+        .faixa-temas::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0.25rem;
+            width: 3.5rem;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff 85%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .faixa-temas.tem-mais::after {
+            opacity: 1;
+        }
+        /* E na borda esquerda quando há temas escondidos antes */
+        .faixa-temas::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0.25rem;
+            width: 3.5rem;
+            background: linear-gradient(to left, rgba(255, 255, 255, 0), #ffffff 85%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1;
+        }
+        .faixa-temas.tem-antes::before {
+            opacity: 1;
+        }
+        @media (max-width: 767px) {
+            /* No mobile a linha rola de borda a borda da tela */
+            .faixa-temas {
+                margin-left: -1.5rem;
+                margin-right: -1.5rem;
+            }
+            .lista-temas {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                scroll-padding-left: 1.5rem;
+            }
+        }
+        @media (min-width: 768px) {
+            .lista-temas {
+                flex-wrap: wrap;
+                justify-content: center;
+                overflow-x: visible;
+            }
+        }
+        .tema-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            white-space: nowrap;
+            scroll-snap-align: start;
+            padding: 0.625rem 1rem;
+            border-radius: 0.75rem;
+            background: #1565C0;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.9375rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .tema-link[aria-current] {
+            background: #FFC107;
+            color: #0D47A1;
+        }
+        .tema-link:hover {
+            background: #0D47A1;
+            color: #ffffff;
+        }
+        .tema-link:focus-visible {
+            outline: 3px solid #0D47A1;
+            outline-offset: 2px;
+        }
+        @media (min-width: 768px) {
+            .indice-temas.fixo .indice-conteudo {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+            .indice-temas.fixo .rotulo-temas {
+                display: none;
+            }
+            .indice-temas.fixo .lista-temas {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: auto;
+                gap: 0.25rem;
+            }
+            /* Centraliza quando cabe; rola quando não cabe */
+            .indice-temas.fixo .lista-temas > :first-child {
+                margin-left: auto;
+            }
+            .indice-temas.fixo .lista-temas > :last-child {
+                margin-right: auto;
+            }
+            .indice-temas.fixo .tema-link {
+                gap: 0.375rem;
+                padding: 0.375rem 0.5rem;
+                font-size: 0.8125rem;
+            }
+        }
+        .faq-tema {
+            scroll-margin-top: calc(var(--altura-cabecalho, 77px) + var(--altura-indice, 110px) + 16px);
+        }
+    </style>
 </head>
 <body class="bg-white text-fortress-gray-dark font-luxury">
     <!-- Header/Navigation -->
-    <header class="glass-effect shadow-luxury fixed w-full top-0 z-50 border-b border-gray-100">
+    <header class="glass-effect fixed w-full top-0 z-50 border-b border-gray-100">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center mr-6 xl:mr-8">
@@ -386,7 +521,7 @@
 
                 <!-- CTA Button Desktop -->
                 <div class="hidden xl:block ml-8 whitespace-nowrap">
-                    <a href="https://wa.me/5531984701815" target="_blank" class="bg-gradient-to-r from-fortress-amber to-yellow-500 text-white px-8 py-3 rounded-xl hover:shadow-luxury transition-all duration-300 font-semibold transform hover:scale-105">
+                    <a href="https://wa.me/5531984701815" target="_blank" class="bg-gradient-to-r from-fortress-amber to-yellow-500 text-fortress-blue-dark px-8 py-3 rounded-xl hover:shadow-luxury transition-all duration-300 font-semibold transform hover:scale-105">
                         <i class="fab fa-whatsapp mr-2"></i>Fale Conosco
                     </a>
                 </div>
@@ -407,7 +542,7 @@
                     <a href="#contato" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Contato</a>
                     <a href="/perguntas-frequentes/" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Dúvidas Frequentes</a>
                     <a href="https://app.meucontador.mobi/meu-contador" target="_blank" class="text-fortress-gray-dark hover:text-fortress-blue transition-colors">Área do Cliente</a>
-                    <a href="https://wa.me/5531984701815" target="_blank" class="bg-fortress-amber text-white px-6 py-2 rounded-lg hover:bg-yellow-500 transition-colors font-semibold text-center">
+                    <a href="https://wa.me/5531984701815" target="_blank" class="bg-fortress-amber text-fortress-blue-dark px-6 py-2 rounded-lg hover:bg-yellow-500 transition-colors font-semibold text-center">
                         <i class="fab fa-whatsapp mr-2"></i>Fale Conosco
                     </a>
                 </div>
@@ -426,31 +561,34 @@
                         <span>Perguntas frequentes</span>
                     </nav>
                     <h1 class="text-4xl md:text-5xl font-black mb-6 leading-tight">Perguntas frequentes sobre contabilidade</h1>
-                    <p class="text-xl md:text-2xl text-blue-100 font-light leading-relaxed">Respostas diretas para as dúvidas que mais ouvimos de empresários em Belo Horizonte. Não achou a sua? Fale com a gente.</p>
+                    <p class="text-xl md:text-2xl text-blue-100 font-light leading-relaxed">Respostas diretas para as dúvidas que mais ouvimos de empresários de Belo Horizonte e de todo o Brasil. Não achou a sua? Fale com a gente.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Índice -->
-        <section class="py-12 bg-fortress-gray-light">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="#contratacao-e-contabilidade" class="px-5 py-3 bg-white rounded-xl border border-gray-200 text-fortress-blue-dark font-semibold hover:border-fortress-blue hover:text-fortress-blue transition-colors">Contratação e contabilidade</a>
-                    <a href="#impostos-e-regime-tributario" class="px-5 py-3 bg-white rounded-xl border border-gray-200 text-fortress-blue-dark font-semibold hover:border-fortress-blue hover:text-fortress-blue transition-colors">Impostos e regime tributário</a>
-                    <a href="#mei" class="px-5 py-3 bg-white rounded-xl border border-gray-200 text-fortress-blue-dark font-semibold hover:border-fortress-blue hover:text-fortress-blue transition-colors">MEI</a>
-                    <a href="#abertura-de-empresa" class="px-5 py-3 bg-white rounded-xl border border-gray-200 text-fortress-blue-dark font-semibold hover:border-fortress-blue hover:text-fortress-blue transition-colors">Abertura de empresa</a>
-                    <a href="#pro-labore-e-inss" class="px-5 py-3 bg-white rounded-xl border border-gray-200 text-fortress-blue-dark font-semibold hover:border-fortress-blue hover:text-fortress-blue transition-colors">Pró-labore e INSS</a>
-                    <a href="#tflf-taxa-da-prefeitura" class="px-5 py-3 bg-white rounded-xl border border-gray-200 text-fortress-blue-dark font-semibold hover:border-fortress-blue hover:text-fortress-blue transition-colors">TFLF (taxa da Prefeitura)</a>
-                    <a href="#encerramento-de-empresa" class="px-5 py-3 bg-white rounded-xl border border-gray-200 text-fortress-blue-dark font-semibold hover:border-fortress-blue hover:text-fortress-blue transition-colors">Encerramento de empresa</a>
+        <!-- Índice de temas (fica fixo abaixo do cabeçalho ao rolar) -->
+        <nav id="indice-temas" class="indice-temas bg-white border-b border-gray-200 shadow-sm" aria-label="Temas das perguntas frequentes">
+            <div class="indice-conteudo container mx-auto px-6 py-4">
+                <p class="rotulo-temas text-sm font-bold text-fortress-gray-dark uppercase tracking-wide mb-3 md:text-center">Escolha um tema</p>
+                <div class="faixa-temas">
+                    <div class="lista-temas">
+                        <a href="#contratacao-e-contabilidade" class="tema-link"><i class="fas fa-handshake" aria-hidden="true"></i>Contratação e contabilidade</a>
+                        <a href="#impostos-e-regime-tributario" class="tema-link"><i class="fas fa-calculator" aria-hidden="true"></i>Impostos e regime tributário</a>
+                        <a href="#mei" class="tema-link"><i class="fas fa-user" aria-hidden="true"></i>MEI</a>
+                        <a href="#abertura-de-empresa" class="tema-link"><i class="fas fa-building" aria-hidden="true"></i>Abertura de empresa</a>
+                        <a href="#pro-labore-e-inss" class="tema-link"><i class="fas fa-wallet" aria-hidden="true"></i>Pró-labore e INSS</a>
+                        <a href="#tflf-taxa-da-prefeitura" class="tema-link"><i class="fas fa-landmark" aria-hidden="true"></i>TFLF (taxa da Prefeitura)</a>
+                        <a href="#encerramento-de-empresa" class="tema-link"><i class="fas fa-door-closed" aria-hidden="true"></i>Encerramento de empresa</a>
+                    </div>
                 </div>
             </div>
-        </section>
+        </nav>
 
         <!-- Perguntas -->
         <section class="py-16 bg-white">
             <div class="container mx-auto px-6">
                 <div class="max-w-3xl mx-auto">
-                    <div id="contratacao-e-contabilidade" class="mb-14 scroll-mt-28">
+                    <div id="contratacao-e-contabilidade" class="faq-tema mb-14">
                         <h2 class="text-2xl md:text-3xl font-black text-fortress-blue-dark mb-6">Contratação e contabilidade</h2>
                         <div class="space-y-4">
                             <details class="group luxury-card rounded-2xl border border-gray-100 shadow-sm">
@@ -483,7 +621,7 @@
                             </details>
                         </div>
                     </div>
-                    <div id="impostos-e-regime-tributario" class="mb-14 scroll-mt-28">
+                    <div id="impostos-e-regime-tributario" class="faq-tema mb-14">
                         <h2 class="text-2xl md:text-3xl font-black text-fortress-blue-dark mb-6">Impostos e regime tributário</h2>
                         <div class="space-y-4">
                             <details class="group luxury-card rounded-2xl border border-gray-100 shadow-sm">
@@ -542,7 +680,7 @@
                             </details>
                         </div>
                     </div>
-                    <div id="mei" class="mb-14 scroll-mt-28">
+                    <div id="mei" class="faq-tema mb-14">
                         <h2 class="text-2xl md:text-3xl font-black text-fortress-blue-dark mb-6">MEI</h2>
                         <div class="space-y-4">
                             <details class="group luxury-card rounded-2xl border border-gray-100 shadow-sm">
@@ -565,7 +703,7 @@
                             </details>
                         </div>
                     </div>
-                    <div id="abertura-de-empresa" class="mb-14 scroll-mt-28">
+                    <div id="abertura-de-empresa" class="faq-tema mb-14">
                         <h2 class="text-2xl md:text-3xl font-black text-fortress-blue-dark mb-6">Abertura de empresa</h2>
                         <div class="space-y-4">
                             <details class="group luxury-card rounded-2xl border border-gray-100 shadow-sm">
@@ -650,7 +788,7 @@
                             </details>
                         </div>
                     </div>
-                    <div id="pro-labore-e-inss" class="mb-14 scroll-mt-28">
+                    <div id="pro-labore-e-inss" class="faq-tema mb-14">
                         <h2 class="text-2xl md:text-3xl font-black text-fortress-blue-dark mb-6">Pró-labore e INSS</h2>
                         <div class="space-y-4">
                             <details class="group luxury-card rounded-2xl border border-gray-100 shadow-sm">
@@ -691,7 +829,7 @@
                             </details>
                         </div>
                     </div>
-                    <div id="tflf-taxa-da-prefeitura" class="mb-14 scroll-mt-28">
+                    <div id="tflf-taxa-da-prefeitura" class="faq-tema mb-14">
                         <h2 class="text-2xl md:text-3xl font-black text-fortress-blue-dark mb-6">TFLF (taxa da Prefeitura)</h2>
                         <div class="space-y-4">
                             <details class="group luxury-card rounded-2xl border border-gray-100 shadow-sm">
@@ -723,7 +861,7 @@
                             </details>
                         </div>
                     </div>
-                    <div id="encerramento-de-empresa" class="mb-14 scroll-mt-28">
+                    <div id="encerramento-de-empresa" class="faq-tema mb-14">
                         <h2 class="text-2xl md:text-3xl font-black text-fortress-blue-dark mb-6">Encerramento de empresa</h2>
                         <div class="space-y-4">
                             <details class="group luxury-card rounded-2xl border border-gray-100 shadow-sm">
@@ -779,7 +917,7 @@
             <div class="container mx-auto px-6 text-center max-w-3xl">
                 <h2 class="text-3xl md:text-4xl font-black mb-6">Ficou com alguma dúvida?</h2>
                 <p class="text-xl text-blue-100 mb-10 font-light">Mande sua pergunta pelo WhatsApp. Quem responde é quem cuida das empresas no dia a dia.</p>
-                <a href="https://wa.me/5531984701815?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20uma%20d%C3%BAvida." target="_blank" rel="noopener" class="inline-block bg-gradient-to-r from-fortress-amber to-yellow-500 text-white px-10 py-5 rounded-2xl hover:shadow-luxury-lg transition-all duration-300 font-bold text-lg transform hover:scale-105">
+                <a href="https://wa.me/5531984701815?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20uma%20d%C3%BAvida." target="_blank" rel="noopener" class="inline-block bg-gradient-to-r from-fortress-amber to-yellow-500 text-fortress-blue-dark px-10 py-5 rounded-2xl hover:shadow-luxury-lg transition-all duration-300 font-bold text-lg transform hover:scale-105">
                     <i class="fab fa-whatsapp mr-3 text-xl"></i>Chamar no WhatsApp
                 </a>
                 <p class="text-blue-100 mt-8 text-sm">Fortress Contabilidade · Av. Waldomiro Lobo, 681 - Sobreloja, Guarani, Belo Horizonte - MG</p>
@@ -854,7 +992,7 @@
                     <p class="text-blue-200 mb-4">
                         Pronto para transformar a gestão da sua empresa?
                     </p>
-                    <a href="https://wa.me/5531984701815" target="_blank" class="bg-fortress-amber text-white px-6 py-3 rounded-lg hover:bg-yellow-500 transition-colors font-semibold inline-block">
+                    <a href="https://wa.me/5531984701815" target="_blank" class="bg-fortress-amber text-fortress-blue-dark px-6 py-3 rounded-lg hover:bg-yellow-500 transition-colors font-semibold inline-block">
                         <i class="fab fa-whatsapp mr-2"></i>Conversar Agora
                     </a>
                 </div>
@@ -878,6 +1016,66 @@
         document.getElementById('menu-botao').addEventListener('click', function () {
             document.getElementById('menu-mobile').classList.toggle('hidden');
         });
+    </script>
+    <script>
+        // Índice de temas: mede cabeçalho/índice fixos e destaca o tema da seção visível
+        (function () {
+            var cabecalho = document.querySelector('header');
+            var indice = document.getElementById('indice-temas');
+            var links = Array.prototype.slice.call(indice.querySelectorAll('.tema-link'));
+            var temas = links.map(function (l) { return document.getElementById(l.getAttribute('href').slice(1)); });
+            var raiz = document.documentElement;
+            var faixa = indice.querySelector('.faixa-temas');
+            var lista = indice.querySelector('.lista-temas');
+            var atual = -2;
+            function atualizarDegrade() {
+                faixa.classList.toggle('tem-mais', lista.scrollWidth - lista.clientWidth - lista.scrollLeft > 2);
+                faixa.classList.toggle('tem-antes', lista.scrollLeft > 2);
+            }
+            function fixar() {
+                var fixo = indice.getBoundingClientRect().top <= cabecalho.offsetHeight + 1;
+                if (fixo === indice.classList.contains('fixo')) return;
+                indice.classList.toggle('fixo', fixo);
+                medir();
+                atual = -2;
+                atualizarDegrade();
+            }
+            function medir() {
+                raiz.style.setProperty('--altura-cabecalho', cabecalho.offsetHeight + 'px');
+                // Compensação das âncoras pela altura da faixa já fixa (no desktop ela fica compacta)
+                var fixa = indice.classList.contains('fixo');
+                if (!fixa) indice.classList.add('fixo');
+                raiz.style.setProperty('--altura-indice', indice.offsetHeight + 'px');
+                if (!fixa) indice.classList.remove('fixo');
+            }
+            function destacar() {
+                var limite = cabecalho.offsetHeight + indice.offsetHeight + 24;
+                var ativo = -1;
+                temas.forEach(function (t, i) { if (t.getBoundingClientRect().top <= limite) ativo = i; });
+                if (ativo === atual) return;
+                atual = ativo;
+                links.forEach(function (l, i) {
+                    if (i === ativo) l.setAttribute('aria-current', 'location');
+                    else l.removeAttribute('aria-current');
+                });
+                // Quando a linha rola (mobile ou desktop compacto), leva o botão ativo para a vista
+                if (ativo >= 0 && lista.scrollWidth > lista.clientWidth) {
+                    lista.scrollTo({ left: links[ativo].offsetLeft - lista.offsetLeft - 24, behavior: 'smooth' });
+                }
+            }
+            var agendado = false;
+            window.addEventListener('scroll', function () {
+                if (agendado) return;
+                agendado = true;
+                requestAnimationFrame(function () { agendado = false; fixar(); destacar(); });
+            }, { passive: true });
+            lista.addEventListener('scroll', atualizarDegrade, { passive: true });
+            window.addEventListener('resize', function () { medir(); atual = -2; destacar(); atualizarDegrade(); });
+            medir();
+            fixar();
+            destacar();
+            atualizarDegrade();
+        })();
     </script>
 </body>
 </html>
