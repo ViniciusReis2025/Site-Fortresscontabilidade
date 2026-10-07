@@ -359,6 +359,9 @@
             gap: 0.5rem;
             overflow-x: auto;
             scroll-snap-type: x proximity;
+            /* Encaixe e botão ativo param depois dos degradês (2,5rem + folga) */
+            scroll-padding-left: 3rem;
+            scroll-padding-right: 3rem;
             scrollbar-width: thin;
             padding-bottom: 0.25rem;
         }
@@ -372,7 +375,7 @@
             top: 0;
             right: 0;
             bottom: 0.25rem;
-            width: 3.5rem;
+            width: 2.5rem;
             background: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff 85%);
             pointer-events: none;
             opacity: 0;
@@ -388,7 +391,7 @@
             top: 0;
             left: 0;
             bottom: 0.25rem;
-            width: 3.5rem;
+            width: 2.5rem;
             background: linear-gradient(to left, rgba(255, 255, 255, 0), #ffffff 85%);
             pointer-events: none;
             opacity: 0;
@@ -407,7 +410,6 @@
             .lista-temas {
                 padding-left: 1.5rem;
                 padding-right: 1.5rem;
-                scroll-padding-left: 1.5rem;
             }
         }
         @media (min-width: 768px) {
@@ -478,7 +480,7 @@
 </head>
 <body class="bg-white text-fortress-gray-dark font-luxury">
     <!-- Header/Navigation -->
-    <header class="glass-effect fixed w-full top-0 z-50 border-b border-gray-100">
+    <header class="bg-white fixed w-full top-0 z-50 border-b border-gray-100">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center mr-6 xl:mr-8">
@@ -1060,7 +1062,9 @@
                 });
                 // Quando a linha rola (mobile ou desktop compacto), leva o botão ativo para a vista
                 if (ativo >= 0 && lista.scrollWidth > lista.clientWidth) {
-                    lista.scrollTo({ left: links[ativo].offsetLeft - lista.offsetLeft - 24, behavior: 'smooth' });
+                    // Para depois do degradê da esquerda (2,5rem) com folga, sem ficar coberto
+                    var margem = parseFloat(getComputedStyle(lista).scrollPaddingLeft) || 48;
+                    lista.scrollTo({ left: links[ativo].offsetLeft - lista.offsetLeft - margem, behavior: 'smooth' });
                 }
             }
             var agendado = false;
